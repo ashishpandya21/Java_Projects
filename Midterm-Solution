@@ -1,0 +1,91 @@
+
+class B{
+	private int b = 0;
+	private void trace(String s) { System.out.println(s);}
+	public B(int b) { this.b = b;}
+	public int getB() { return b;}
+	public void setB(int b) { this.b = b; }
+	public boolean isZero() { return b==0;}
+}
+class F{
+	private int f = 0;
+	private void trace(String s) { System.out.println(s);}
+	public F(int f) { this.f = f;}
+	public int getF() { return f;}
+	public void setF(int f) { this.f = f; }
+	public boolean isZero() { return f==0;}
+}
+class A{
+	private String a;
+	private B b = new B(0);
+	private F f = new F(0);
+	private void trace(String s) { System.out.println(s);}
+	public A(String a1, int b1, int f1) {   
+		   a=a1; 
+		   b = new B(b1); 
+		   f = new F(f1); 
+		}
+	public String getA() { return a; }
+	public B getB() { return b; }
+	public F getF() { return f; }
+	public void setA(String a1) { a =  a1; }
+	public void setB(int b1) { b = new B(b1); }
+	public void setF(int f1) { f = new F(f1); }
+	
+}
+class D{
+	private int d = 0;
+	private void trace(String s) { System.out.println(s);}
+	public D(int d) { this.d = d;}
+	public int getD() { return d;}
+	public void setD(int d) { this.d = d; }
+	public boolean isZero() { return d==0;}
+}
+class E extends A{
+	private int e = 0;
+	private D d = new D(0);
+	private void trace(String s) 
+	{
+		System.out.println(s);
+	}
+	public E(String a1, int b1, int f1, int d1, int e1)
+	{ 
+		super(a1,b1,f1);
+		e=e1; 
+		d.setD(d1);
+	}
+	public int getE() 
+	{  
+		return e; 
+	}
+	public void set(int e1) 
+	{ 
+		e = e1;
+	}
+	
+	public int getD()
+	{
+		return d.getD();
+	}
+	public void setD(int d1) 
+	{ 
+		d.setD(d1);
+	}
+	
+	
+	
+}
+public class Midterm_Cl {
+	public static void main(String arg[]) {
+		E e = new E("NPU",1,2,4,3);
+		System.out.println("d : " +e.getD()+", a : " + e.getA());
+		System.out.println("--------------------------");
+		System.out.println("Post changes in values");
+		System.out.println("--------------------------");
+		e.setD(10);
+		e.setA("XYZ");
+		System.out.println("d : " +e.getD()+", a : " + e.getA());
+		System.out.println("-------------------------------");
+	}
+
+}
