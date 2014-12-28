@@ -1,0 +1,195 @@
+class Cover
+{
+	private int nl;     
+
+	public Cover(int nl) 
+	{
+		this.nl = nl;
+	}
+	
+	public int getNl() {
+		return nl;
+	}
+
+	public void setNl(int nl) {
+		this.nl = nl;
+	}
+}
+
+class Book
+{
+	private int np;	// Number of page
+	private int w,h;  // Book width and height
+	private Cover frontCover = new Cover(0);
+	private Cover backCover = new Cover(0);
+	
+	public Book(int np1, int w, int h, int f1, int b1) throws InvalidFrontCover, InvalidBackCover, EmptyBook, SquareBook
+	{
+		if(f1<0)
+			throw new InvalidFrontCover(f1);
+		else if (b1<0)
+			throw new InvalidBackCover(b1);
+		else if (np1<=0)
+			throw new EmptyBook(np1);
+		else if (w==h)
+			throw new SquareBook(w);
+		else
+			np = np1;
+			this.w=w;
+			this.h=h;
+			frontCover.setNl(f1);
+			backCover.setNl(b1);
+	}
+/*	
+	public int getNp(){return np;}
+	public int getW(){return w;}
+	public int getH(){return h;}
+
+	public int getFrontCover(){return frontCover.getNl();}
+	public int getBackCover(){return backCover.getNl();}
+*/
+	public void setNp(int np1) throws EmptyBook
+	{
+		if (np1<=0)
+			throw new EmptyBook(np1);
+		else
+			np = np1;
+	}
+	public void setW(int w1) throws SquareBook
+	{
+		if (w1==w)
+			throw new SquareBook(w);
+		else
+		w=w1;
+	}
+
+	public void setH(int h1) throws SquareBook
+	{
+		if (h1==h)
+			throw new SquareBook(h);
+		else
+		h=h1;
+	}
+
+	public void setFrontCover(int f1) throws InvalidFrontCover
+	{ 
+		if(f1<0)
+			throw new InvalidFrontCover(f1);
+		else
+		frontCover.setNl(f1);
+	}
+	public void setBackCover(int b1) throws InvalidBackCover
+	{ 
+		if (b1<0)
+			throw new InvalidBackCover(b1);
+		else
+			backCover.setNl(b1);
+	}
+
+}
+
+class Error extends Exception 
+{
+   private int code;
+   public Error(int i1)
+   {
+	   code = i1; 
+	}
+   public int getCode() 
+   { 
+	   return code; 
+   }
+}
+
+class InvalidFrontCover extends Error{
+	   private int l;
+	   
+	   public InvalidFrontCover(int l1)
+	   {
+		   super(1); 
+		   l = l1; 
+	   }
+	   
+	   public int getL() 
+	   { 
+		   return l; 
+	   }
+	}
+
+class InvalidBackCover extends Error{
+   private int l;
+   
+   public InvalidBackCover(int l1)
+   {
+	   super(2); 
+	   l = l1; 
+	}
+   
+   public int getL() 
+   { 
+	   return l; 
+	}
+}
+
+class EmptyBook extends Error{
+	   private int np;
+	   
+	   public EmptyBook(int np1)
+	   {
+		   super(3); 
+		   np = np1; 
+		}
+	   
+	   public int getNp() 
+	   { 
+		   return np; 
+		}
+}
+
+class SquareBook extends Error{
+	   private int side;
+	   
+	   public SquareBook(int side1)
+	   {
+		   super(4); 
+		   side = side1; 
+		}
+	   
+	   public int getSide() 
+	   { 
+		   return side; 
+		}
+}
+
+
+
+public class Book_Cover {
+	public static void main(String args[])
+	{
+		try
+		{
+			Book book1 = new Book(200,3,4,5,6);
+			Book book2 = new Book(300,4,4,4,5);
+			Book book3 = new Book(435,5,7,5,6);
+		}
+		
+	     catch (InvalidFrontCover n) {
+	          System.out.println("Error " +n.getCode() + ": " + "Error in setting lines of front cover " + n.getL());
+	       }
+	     catch (InvalidBackCover n) {
+	          System.out.println("Error " +n.getCode() + ": " + "Error in setting lines of Back cover " + n.getL());
+	       }
+
+	     catch (EmptyBook n) {
+	          System.out.println("Error " +n.getCode() + ": " + "Error, sorry Book is empty " + n.getNp());
+	       }
+	     catch (SquareBook n) {
+	          System.out.println("Error " +n.getCode() + ": " + "This is a square book, whose side is " + n.getSide());
+	       }
+		finally
+		{
+			 System.out.println("end");
+		}
+
+	}
+}
